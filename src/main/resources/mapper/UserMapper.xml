@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangkw.pin.infrastructure.repository.UserRepository">
+    <resultMap id="user" type="com.yangkw.pin.domain.user.UserDO">
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="city" property="city"/>
+        <result column="country" property="country"/>
+        <result column="deleted" property="deleted"/>
+        <result column="gender" property="gender"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="id" property="id"/>
+        <result column="language" property="language"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="openid" property="openid"/>
+        <result column="phone" property="phone"/>
+        <result column="province" property="province"/>
+        <result column="country" property="country"/>
+        <result column="city" property="city"/>
+        <result column="school" property="school"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.yangkw.pin.domain.user.UserDO" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
+    INSERT INTO user (id,openid,nick_name,gender,avatar_url,school,phone,
+    last_login_time,gmt_create,gmt_modified,deleted,country,province,city,language)
+    VALUES (#{userDO.id},#{userDO.openid},#{userDO.nickName},#{userDO.gender},
+    #{userDO.avatarUrl},#{userDO.school},#{userDO.phone},NOW(),NOW(),NOW(),0
+    ,#{userDO.country},#{userDO.province},#{userDO.city},#{userDO.language})
+    </insert>
+
+    <update id="update" parameterType="com.yangkw.pin.domain.user.UserDO">
+    UPDATE user SET nick_name=#{userDO.nickName},gender=#{userDO.gender},
+    avatar_url=#{userDO.avatarUrl},school=#{userDO.school},phone=#{userDO.phone},
+    last_login_time=NOW(),gmt_modified=NOW(),deleted=#{userDO.deleted},
+    country=#{userDO.country},province=#{userDO.province},city=#{userDO.city},language=#{userDO.language}
+    WHERE openid = #{userDO.openid}
+    </update>
+
+    <select id="find" resultMap="user">
+        select * from user where openid = #{openId}
+    </select>
+
+
+</mapper>
