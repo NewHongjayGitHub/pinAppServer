@@ -6,7 +6,7 @@ import com.yangkw.pin.domain.login.LoginInfoDTO;
 import com.yangkw.pin.domain.response.LoginResponse;
 import com.yangkw.pin.domain.user.UserDO;
 import com.yangkw.pin.domain.user.UserToken;
-import com.yangkw.pin.infrastructure.register.UserTokenManager;
+import com.yangkw.pin.infrastructure.register.TokenManager;
 import com.yangkw.pin.service.UserService;
 import com.yangkw.pin.service.util.CheckUtil;
 import com.yangkw.pin.service.util.ResponseUtil;
@@ -35,6 +35,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private WxMaService wxService;
+    @Autowired
+    private TokenManager tokenManager;
 
     @PostMapping("login")
     public LoginResponse login(@RequestBody @Validated LoginInfoDTO info, BindingResult bindingResult) {
@@ -60,7 +62,7 @@ public class LoginController {
             id = old.getId();
             userService.update(info, result.getOpenid());
         }
-        UserToken userToken = UserTokenManager.generateToken(id, result.getSessionKey());
+        UserToken userToken = tokenManager.generateToken(id, result.getSessionKey(), result.getOpenid());
         response.setSuccess(true);
         response.setToken(userToken.getToken());
         response.setExpireDate(userToken.getExpireTime().toString());

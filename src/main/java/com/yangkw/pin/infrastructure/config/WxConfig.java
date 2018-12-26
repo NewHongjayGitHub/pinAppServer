@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.WxMaInMemoryConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,5 +32,28 @@ public class WxConfig {
         WxMaService service = new WxMaServiceImpl();
         service.setWxMaConfig(maConfig);
         return service;
+    }
+
+    @Configuration
+    @ConfigurationProperties(prefix = "wx")
+    private class WxProperties {
+        private String appId;
+        private String secret;
+
+        public String getAppId() {
+            return appId;
+        }
+
+        public void setAppId(String appId) {
+            this.appId = appId;
+        }
+
+        public String getSecret() {
+            return secret;
+        }
+
+        public void setSecret(String secret) {
+            this.secret = secret;
+        }
     }
 }

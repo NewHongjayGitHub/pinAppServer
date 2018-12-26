@@ -2,6 +2,9 @@ package com.yangkw.pin.infrastructure.register;
 
 import com.yangkw.pin.domain.user.UserToken;
 import com.yangkw.pin.service.util.RandomUtil;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -12,11 +15,13 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author kaiwen.ykw 2018-12-22
  */
-public class UserTokenManager {
+@Component
+@CacheConfig(cacheNames = "token")
+public class TokenManager {
     private static Map<String, UserToken> tokenMap = new ConcurrentHashMap<>();
     private static Map<Integer, UserToken> idMap = new ConcurrentHashMap<>();
 
-    public static Integer getUserId(String token) {
+    public Integer getUserId(String token) {
         UserToken userToken = tokenMap.get(token);
         if (userToken == null) {
             return null;
@@ -29,8 +34,9 @@ public class UserTokenManager {
         return userToken.getUserId();
     }
 
-    public static UserToken generateToken(Integer id, String sessionKey) {
-        String token = null;
+    @CachePut(key = "#p0")
+    public UserToken generateToken(Integer id, String sessionKey, String openid) {
+        String token;
         do {
             token = RandomUtil.getRandomString(32);
         }
@@ -44,6 +50,7 @@ public class UserTokenManager {
         userToken.setUpdateTime(update);
         userToken.setExpireTime(expire);
         userToken.setSessionKey(sessionKey);
+        userToken.setOpenid(openid);
         userToken.setUserId(id);
         tokenMap.put(token, userToken);
         idMap.put(id, userToken);
@@ -51,7 +58,7 @@ public class UserTokenManager {
         return userToken;
     }
 
-    public static String getSessionKey(Integer userId) {
+    public String getSessionKey(Integer userId) {
         UserToken userToken = idMap.get(userId);
         if (userToken == null) {
             return null;
@@ -66,7 +73,7 @@ public class UserTokenManager {
         return userToken.getSessionKey();
     }
 
-    public static void removeToken(Integer userId) {
+    public void removeToken(Integer userId) {
         UserToken userToken = idMap.get(userId);
         String token = userToken.getToken();
         idMap.remove(userId);

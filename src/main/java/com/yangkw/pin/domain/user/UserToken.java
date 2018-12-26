@@ -11,6 +11,7 @@ public class UserToken {
     private Integer userId;
     private String token;
     private String sessionKey;
+    private String openid;
     private LocalDateTime expireTime;
     private LocalDateTime updateTime;
 
@@ -52,6 +53,14 @@ public class UserToken {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }
 
