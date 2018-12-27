@@ -7,7 +7,6 @@ package com.yangkw.pin.domain.response;
  */
 public class LoginResponse extends BaseResponse {
     private String token;
-    private String expireDate;
 
     public String getToken() {
         return token;
@@ -15,13 +14,5 @@ public class LoginResponse extends BaseResponse {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(String expireDate) {
-        this.expireDate = expireDate;
     }
 }

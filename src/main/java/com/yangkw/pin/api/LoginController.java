@@ -2,13 +2,12 @@ package com.yangkw.pin.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import com.yangkw.pin.domain.login.LoginInfoDTO;
+import com.yangkw.pin.domain.request.LoginRequest;
 import com.yangkw.pin.domain.response.LoginResponse;
 import com.yangkw.pin.domain.user.UserDO;
-import com.yangkw.pin.domain.user.UserToken;
-import com.yangkw.pin.infrastructure.register.TokenManager;
+import com.yangkw.pin.service.CacheService;
 import com.yangkw.pin.service.UserService;
-import com.yangkw.pin.service.util.CheckUtil;
+import com.yangkw.pin.service.annotation.ParamCheck;
 import com.yangkw.pin.service.util.ResponseUtil;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.slf4j.Logger;
@@ -36,14 +35,12 @@ public class LoginController {
     @Autowired
     private WxMaService wxService;
     @Autowired
-    private TokenManager tokenManager;
+    private CacheService cacheService;
 
     @PostMapping("login")
-    public LoginResponse login(@RequestBody @Validated LoginInfoDTO info, BindingResult bindingResult) {
+    @ParamCheck
+    public LoginResponse login(@RequestBody @Validated LoginRequest info, BindingResult bindingResult) {
         LoginResponse response = new LoginResponse();
-        if (bindingResult.hasErrors()) {
-            return ResponseUtil.errorResponse(response, CheckUtil.error(bindingResult));
-        }
         WxMaJscode2SessionResult result = null;
         try {
             result = wxService.getUserService().getSessionInfo(info.getCode());
@@ -62,10 +59,9 @@ public class LoginController {
             id = old.getId();
             userService.update(info, result.getOpenid());
         }
-        UserToken userToken = tokenManager.generateToken(id, result.getSessionKey(), result.getOpenid());
+        String token = cacheService.addUserId(id, result.getSessionKey(), result.getOpenid());
         response.setSuccess(true);
-        response.setToken(userToken.getToken());
-        response.setExpireDate(userToken.getExpireTime().toString());
+        response.setToken(token);
         return response;
     }
 }

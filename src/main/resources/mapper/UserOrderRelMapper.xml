@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangkw.pin.infrastructure.repository.UserOrderRelRepository">
+
+    <insert id="insert" parameterType="com.yangkw.pin.domain.relation.UserOrderRelDO" useGeneratedKeys="true"
+            keyColumn="id"
+            keyProperty="id">
+    INSERT INTO user_order_rel (gmt_create,gmt_modified,order_id,user_id,leader,deleted)
+    values (now(),now(),#{userOrderRelDO.orderId},#{userOrderRelDO.userId},#{userOrderRelDO.leader},
+    0)
+    </insert>
+
+    <select id="queryPartner" resultType="java.lang.Integer">
+        SELECT open_id FROM user_order_rel WHERE order_id=#{orderId} and deleted = 0
+    </select>
+</mapper>

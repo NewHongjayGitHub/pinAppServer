@@ -36,10 +36,8 @@ public class CacheConfig {
 
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(3);
-        //SsoCache和BasicDataCache进行过期时间配置
-        final int weekTime = 7 * 24 * 60 * 60;
+        final int weekTime = 1 * 60 * 60;
         redisCacheConfigurationMap.put("tokenMap", this.getRedisCacheConfigurationWithTtl(weekTime));
-        redisCacheConfigurationMap.put("idMap", this.getRedisCacheConfigurationWithTtl(weekTime));
         return redisCacheConfigurationMap;
     }
 

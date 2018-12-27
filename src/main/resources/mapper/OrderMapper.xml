@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangkw.pin.infrastructure.repository.OrderRepository">
+
+    <resultMap id="order" type="com.yangkw.pin.domain.order.OrderDO">
+        <result column="end_address_id" property="endAddressId"/>
+        <result column="start_address_id" property="startAddressId"/>
+        <result column="creator" property="creator"/>
+        <result column="target_time" property="targetTime"/>
+        <result column="target_num" property="targetNum"/>
+        <result column="current_num" property="currentNum"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="id" property="id"/>
+        <result column="now" property="now"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.yangkw.pin.domain.order.OrderDO" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
+    INSERT INTO pin_order (id,gmt_create,gmt_modified,creator,start_address_id,end_address_id,target_time,target_num,current_num,now,deleted)
+    values (#{orderDO.id},now(),now(),#{orderDO.creator},#{orderDO.startAddressId},#{orderDO.endAddressId},#{orderDO.targetTime},
+    #{orderDO.targetNum},#{orderDO.currentNum},#{orderDO.now},#{orderDO.deleted})
+    </insert>
+
+    <select id="findAll" resultMap="order">
+        SELECT * FROM pin_order WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        AND deleted = 0
+    </select>
+
+
+</mapper>

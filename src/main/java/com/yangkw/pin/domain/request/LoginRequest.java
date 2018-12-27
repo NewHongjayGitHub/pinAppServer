@@ -1,4 +1,4 @@
-package com.yangkw.pin.domain.login;
+package com.yangkw.pin.domain.request;
 
 import com.yangkw.pin.domain.user.UserInfo;
 
@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
  *
  * @author kaiwen.ykw 2018-12-21
  */
-public class LoginInfoDTO {
-    @NotNull
+public class LoginRequest {
+    @NotNull(message = "code can't null")
     private String code;
-    @NotNull
+    @NotNull(message = "userInfo can't null")
     private UserInfo userInfo;
 
     public String getCode() {
@@ -33,7 +33,7 @@ public class LoginInfoDTO {
 
     @Override
     public String toString() {
-        return "LoginInfoDTO{" +
+        return "LoginRequest{" +
                 "code='" + code + '\'' +
                 ", userInfo=" + userInfo +
                 '}';

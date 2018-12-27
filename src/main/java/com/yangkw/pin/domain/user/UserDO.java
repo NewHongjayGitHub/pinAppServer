@@ -1,6 +1,6 @@
 package com.yangkw.pin.domain.user;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 类UserDO.java的实现描述：TODO
@@ -15,9 +15,9 @@ public class UserDO {
     private String avatarUrl;
     private String school;
     private String phone;
-    private Date lastLoginTime;
-    private Date gmtCreate;
-    private Date gmtModified;
+    private LocalDateTime lastLoginTime;
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
     private Boolean deleted;
     private String country;
     private String province;
@@ -64,27 +64,27 @@ public class UserDO {
         this.phone = phone;
     }
 
-    public Date getLastLoginTime() {
+    public LocalDateTime getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(LocalDateTime lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public Date getGmtCreate() {
+    public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public LocalDateTime getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(LocalDateTime gmtModified) {
         this.gmtModified = gmtModified;
     }
 

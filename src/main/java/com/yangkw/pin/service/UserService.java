@@ -1,7 +1,7 @@
 package com.yangkw.pin.service;
 
 import com.google.common.base.Preconditions;
-import com.yangkw.pin.domain.login.LoginInfoDTO;
+import com.yangkw.pin.domain.request.LoginRequest;
 import com.yangkw.pin.domain.user.UserDO;
 import com.yangkw.pin.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Integer insert(LoginInfoDTO info, String openid) {
+    public Integer insert(LoginRequest info, String openid) {
         UserDO userDO = assemble(info, openid);
         int row = userRepository.insert(userDO);
         Preconditions.checkState(row == 1, "login insert error openid" + openid);
@@ -28,12 +28,12 @@ public class UserService {
         return userRepository.find(openId);
     }
 
-    public void update(LoginInfoDTO infoDTO, String openid) {
+    public void update(LoginRequest infoDTO, String openid) {
         int row = userRepository.update(assemble(infoDTO, openid));
         Preconditions.checkState(row == 1, "login update error openid" + openid);
     }
 
-    private UserDO assemble(LoginInfoDTO infoDTO, String openid) {
+    private UserDO assemble(LoginRequest infoDTO, String openid) {
         UserDO userDO = new UserDO();
         userDO.setOpenid(openid);
         userDO.setDeleted(false);

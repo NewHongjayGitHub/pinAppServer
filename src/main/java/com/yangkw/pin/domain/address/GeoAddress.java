@@ -8,16 +8,7 @@ package com.yangkw.pin.domain.address;
 public class GeoAddress {
     private String name;
     private String address;
-    /**
-     * 纬度
-     */
-    private Double latitude;
-
-    /**
-     * 经度
-     */
-    private Double longitude;
-
+    private Dot dot;
     public String getName() {
         return name;
     }
@@ -34,29 +25,11 @@ public class GeoAddress {
         this.address = address;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Dot getDot() {
+        return dot;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    @Override
-    public String toString() {
-        return "GeoAddress{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+    public void setDot(Dot dot) {
+        this.dot = dot;
     }
 }
