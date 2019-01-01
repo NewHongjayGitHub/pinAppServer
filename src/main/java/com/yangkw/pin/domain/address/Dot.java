@@ -15,6 +15,9 @@ public class Dot {
      */
     private Double longitude;
 
+    public Dot() {
+    }
+
     public Dot(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

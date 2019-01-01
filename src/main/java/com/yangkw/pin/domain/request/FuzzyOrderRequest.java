@@ -1,6 +1,6 @@
 package com.yangkw.pin.domain.request;
 
-import com.yangkw.pin.domain.address.GeoAddress;
+import com.yangkw.pin.domain.address.Dot;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,23 +11,23 @@ import javax.validation.constraints.NotNull;
  */
 public class FuzzyOrderRequest extends BaseRequest {
     @NotNull(message = "startAddress can't null")
-    private GeoAddress startAddress;
+    private Dot startDot;
     @NotNull(message = "endAddress can't null")
-    private GeoAddress endAddress;
+    private Dot endDot;
 
-    public GeoAddress getStartAddress() {
-        return startAddress;
+    public Dot getStartDot() {
+        return startDot;
     }
 
-    public void setStartAddress(GeoAddress startAddress) {
-        this.startAddress = startAddress;
+    public void setStartDot(Dot startDot) {
+        this.startDot = startDot;
     }
 
-    public GeoAddress getEndAddress() {
-        return endAddress;
+    public Dot getEndDot() {
+        return endDot;
     }
 
-    public void setEndAddress(GeoAddress endAddress) {
-        this.endAddress = endAddress;
+    public void setEndDot(Dot endDot) {
+        this.endDot = endDot;
     }
 }

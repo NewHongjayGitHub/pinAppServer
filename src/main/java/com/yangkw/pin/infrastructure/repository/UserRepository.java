@@ -1,5 +1,6 @@
 package com.yangkw.pin.infrastructure.repository;
 
+import com.yangkw.pin.domain.chat.UserInfoForChat;
 import com.yangkw.pin.domain.user.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,6 +27,10 @@ public interface UserRepository {
      * @return
      */
     UserDO find(@Param("openId") String openId);
+
+    String findOpenId(@Param("userId") Integer userId);
+
+    UserInfoForChat findChatInfo(@Param("userId") Integer userId);
 
     /**
      * 更新用户

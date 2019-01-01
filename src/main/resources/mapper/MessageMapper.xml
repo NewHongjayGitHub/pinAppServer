@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangkw.pin.infrastructure.repository.MessageRepository">
+    <resultMap id="message" type="com.yangkw.pin.domain.chat.MessageDO">
+        <result column="id" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="user_id" property="userId"/>
+        <result column="time" property="time"/>
+        <result column="message" property="message"/>
+    </resultMap>
+    <insert id="inert">
+        INSERT INTO room_message (user_id,time,message,order_id)
+        VALUES (#{messageDO.userId},#{messageDO.time},#{messageDO.message},#{messageDO.orderId})
+    </insert>
+    <select id="findExist" resultType="java.lang.Integer">
+        SELECT count(id) FROM room_message WHERE order_id = #{orderId} LIMIT 1
+    </select>
+    <select id="queryAll" resultMap="message">
+        SELECT * FROM room_message WHERE order_id = #{orderId}
+    </select>
+
+
+</mapper>

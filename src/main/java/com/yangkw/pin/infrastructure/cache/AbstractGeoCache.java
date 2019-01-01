@@ -66,7 +66,7 @@ public abstract class AbstractGeoCache {
         }
         for (GeoResult<RedisGeoCommands.GeoLocation<String>> x : geoResults.getContent()) {
             OrderCache cache = JSON.parseObject(x.getContent().getName(), OrderCache.class);
-            if (cache.getTargetTime().isBefore(LocalDateTime.now())) {
+            if (cache.getTargetTime() != null && cache.getTargetTime().isBefore(LocalDateTime.now())) {
                 operations.remove(key, x.getContent().getName());
             } else {
                 orderIdList.add(cache.getOrderId());

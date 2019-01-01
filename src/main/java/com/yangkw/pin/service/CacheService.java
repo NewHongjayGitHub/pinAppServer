@@ -1,6 +1,7 @@
 package com.yangkw.pin.service;
 
 import com.yangkw.pin.domain.address.GeoAddress;
+import com.yangkw.pin.domain.order.TimeDTO;
 import com.yangkw.pin.domain.request.FuzzyOrderRequest;
 import com.yangkw.pin.domain.request.PublishOrderRequest;
 import com.yangkw.pin.domain.user.UserToken;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -52,8 +54,8 @@ public class CacheService {
     }
 
     public List<Integer> findNearOrderId(FuzzyOrderRequest request) {
-        List<Integer> startOrderIdlist = startAbstractGeoCache.findOrderId(request.getStartAddress().getDot());
-        List<Integer> endOrderIdlist = endAbstractGeoCache.findOrderId(request.getEndAddress().getDot());
+        List<Integer> startOrderIdlist = startAbstractGeoCache.findOrderId(request.getStartDot());
+        List<Integer> endOrderIdlist = endAbstractGeoCache.findOrderId(request.getEndDot());
         startOrderIdlist.retainAll(endOrderIdlist);
         return startOrderIdlist;
     }
@@ -65,12 +67,16 @@ public class CacheService {
 
     private void publishStart(PublishOrderRequest request, Integer orderId) {
         GeoAddress address = request.getStartAddress();
-        startAbstractGeoCache.add(address.getDot(), orderId, request.getTargetTime());
+        startAbstractGeoCache.add(address.getDot(), orderId, assemble(request.getTimeDTO()));
     }
 
     private void publishEnd(PublishOrderRequest request, Integer orderId) {
-        GeoAddress address = request.getStartAddress();
-        endAbstractGeoCache.add(address.getDot(), orderId, request.getTargetTime());
+        GeoAddress address = request.getEndAddress();
+        endAbstractGeoCache.add(address.getDot(), orderId, assemble(request.getTimeDTO()));
+    }
+
+    private LocalDateTime assemble(TimeDTO time) {
+        return LocalDateTime.of(time.getYear(), time.getMonth(), time.getDay(), time.getHour(), time.getMinute());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.yangkw.pin.service;
 
 import com.google.common.base.Preconditions;
+import com.yangkw.pin.domain.chat.UserInfoForChat;
 import com.yangkw.pin.domain.request.LoginRequest;
 import com.yangkw.pin.domain.user.UserDO;
 import com.yangkw.pin.infrastructure.repository.UserRepository;
@@ -28,6 +29,9 @@ public class UserService {
         return userRepository.find(openId);
     }
 
+    public UserInfoForChat findChatInfo(Integer userId) {
+        return userRepository.findChatInfo(userId);
+    }
     public void update(LoginRequest infoDTO, String openid) {
         int row = userRepository.update(assemble(infoDTO, openid));
         Preconditions.checkState(row == 1, "login update error openid" + openid);

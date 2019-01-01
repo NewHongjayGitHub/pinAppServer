@@ -15,7 +15,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.yangkw.pin.domain.address.AddressDO" useGeneratedKeys="true" keyColumn="id"
-            keyProperty="id">
+            keyProperty="addressDO.id">
     INSERT INTO address (id,gmt_create,gmt_modified,name,address,latitude,longitude,type,hot_point) values (#{addressDO.id},now(),
     now(),#{addressDO.name},#{addressDO.address},#{addressDO.latitude},#{addressDO.longitude},#{addressDO.type},
     #{addressDO.hotPoint})

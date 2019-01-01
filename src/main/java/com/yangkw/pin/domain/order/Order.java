@@ -5,15 +5,15 @@ import com.yangkw.pin.domain.address.GeoAddress;
 import java.time.LocalDateTime;
 
 /**
- * 类Order.java的实现描述：TODO
+ * 类Order.java
  *
  * @author kaiwen.ykw 2018-12-26
  */
 public class Order {
     /**
-     * 发起人的userId
+     * 是否是队长
      */
-    private Integer initiator;
+    private Boolean leader;
     /**
      * 出行单id
      */
@@ -29,15 +29,17 @@ public class Order {
     /**
      * 发布时间
      */
-    private LocalDateTime publishTime;
+    private String publishTime;
     /**
      * 最后更新时间
      */
-    private LocalDateTime updateTime;
+    private String updateTime;
     /**
      * 目标出行时间
      */
-    private LocalDateTime targetTime;
+    private String targetTime;
+
+    private LocalDateTime orderItem;
     /**
      * 队伍人数
      */
@@ -46,17 +48,14 @@ public class Order {
      * 当前人数
      */
     private Integer currentNum;
-    /**
-     * 立即出发
-     */
-    private Boolean now;
 
-    public Integer getInitiator() {
-        return initiator;
+    public Boolean getLeader() {
+        return leader;
     }
 
-    public void setInitiator(Integer initiator) {
-        this.initiator = initiator;
+    public Order setLeader(Boolean leader) {
+        this.leader = leader;
+        return this;
     }
 
     public Integer getId() {
@@ -83,27 +82,27 @@ public class Order {
         this.endAddress = endAddress;
     }
 
-    public LocalDateTime getPublishTime() {
+    public String getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(LocalDateTime publishTime) {
+    public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
-    public LocalDateTime getTargetTime() {
+    public String getTargetTime() {
         return targetTime;
     }
 
-    public void setTargetTime(LocalDateTime targetTime) {
+    public void setTargetTime(String targetTime) {
         this.targetTime = targetTime;
     }
 
@@ -123,11 +122,26 @@ public class Order {
         this.currentNum = currentNum;
     }
 
-    public Boolean getNow() {
-        return now;
+    public LocalDateTime getOrderItem() {
+        return orderItem;
     }
 
-    public void setNow(Boolean now) {
-        this.now = now;
+    public void setOrderItem(LocalDateTime orderItem) {
+        this.orderItem = orderItem;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "leader=" + leader +
+                ", id=" + id +
+                ", startAddress=" + startAddress +
+                ", endAddress=" + endAddress +
+                ", publishTime=" + publishTime +
+                ", updateTime=" + updateTime +
+                ", targetTime=" + targetTime +
+                ", targetNum=" + targetNum +
+                ", currentNum=" + currentNum +
+                '}';
     }
 }

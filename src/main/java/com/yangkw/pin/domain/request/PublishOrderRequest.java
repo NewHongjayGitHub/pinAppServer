@@ -1,9 +1,9 @@
 package com.yangkw.pin.domain.request;
 
 import com.yangkw.pin.domain.address.GeoAddress;
+import com.yangkw.pin.domain.order.TimeDTO;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 /**
  * 类PublishOrderRequest.java的实现描述：TODO
@@ -14,23 +14,20 @@ public class PublishOrderRequest extends BaseRequest {
     /**
      * 起点
      */
-    @NotNull
+    @NotNull(message = "起点不能空")
     private GeoAddress startAddress;
     /**
      * 终点
      */
-    @NotNull
+    @NotNull(message = "终点不能空")
     private GeoAddress endAddress;
-    /**
-     * 目标出行时间
-     */
-    private LocalDateTime targetTime;
+    @NotNull(message = "时间不能空")
+    private TimeDTO timeDTO;
     /**
      * 队伍人数
      */
+    @NotNull(message = "目标人数")
     private Integer targetNum;
-
-    private Boolean now;
 
     public GeoAddress getStartAddress() {
         return startAddress;
@@ -48,13 +45,6 @@ public class PublishOrderRequest extends BaseRequest {
         this.endAddress = endAddress;
     }
 
-    public LocalDateTime getTargetTime() {
-        return targetTime;
-    }
-
-    public void setTargetTime(LocalDateTime targetTime) {
-        this.targetTime = targetTime;
-    }
 
     public Integer getTargetNum() {
         return targetNum;
@@ -64,11 +54,11 @@ public class PublishOrderRequest extends BaseRequest {
         this.targetNum = targetNum;
     }
 
-    public Boolean getNow() {
-        return now;
+    public TimeDTO getTimeDTO() {
+        return timeDTO;
     }
 
-    public void setNow(Boolean now) {
-        this.now = now;
+    public void setTimeDTO(TimeDTO timeDTO) {
+        this.timeDTO = timeDTO;
     }
 }

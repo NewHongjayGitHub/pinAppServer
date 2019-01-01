@@ -31,7 +31,7 @@ public class AddressService {
 
     public GeoAddress queryGeoAddress(Integer id) {
         AddressDO addressDO = addressRepository.findById(id);
-        Preconditions.checkState(addressDO == null, "address query null");
+        Preconditions.checkState(addressDO != null, "address query null");
         return assemble(addressDO);
     }
 

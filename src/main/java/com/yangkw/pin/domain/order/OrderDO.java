@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class OrderDO {
     private Integer id;
     private Integer creator;
+    private Integer leader;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
     private Integer startAddressId;
@@ -17,8 +18,15 @@ public class OrderDO {
     private LocalDateTime targetTime;
     private Integer targetNum;
     private Integer currentNum;
-    private Boolean now;
     private Boolean deleted;
+
+    public Integer getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Integer leader) {
+        this.leader = leader;
+    }
 
     public Integer getId() {
         return id;
@@ -90,14 +98,6 @@ public class OrderDO {
 
     public void setCurrentNum(Integer currentNum) {
         this.currentNum = currentNum;
-    }
-
-    public Boolean getNow() {
-        return now;
-    }
-
-    public void setNow(Boolean now) {
-        this.now = now;
     }
 
     public Boolean getDeleted() {
