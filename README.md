@@ -5,6 +5,9 @@
 
 springBoot+Redis+MySQL+Mybatis+Nginx+WebSocket
 
+### 快速体验
+![WechatIMG1](https://i.loli.net/2019/01/08/5c34ab47e70f0.png)
+
 ### 界面截图
 
 ![](https://i.loli.net/2019/01/08/5c34971c5a0c5.jpeg)
