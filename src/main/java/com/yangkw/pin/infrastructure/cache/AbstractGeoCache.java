@@ -29,11 +29,19 @@ public abstract class AbstractGeoCache {
     @Autowired
     protected StringRedisTemplate redisTemplate;
 
+    /**
+     * 增加缓存
+     *
+     * @param dot        坐标
+     * @param orderId    订单号
+     * @param targetTime 目标时间
+     */
     public abstract void add(Dot dot, Integer orderId, LocalDateTime targetTime);
 
     /**
      * 添加缓存
      *
+     * @param key        key
      * @param dot        坐标
      * @param orderId    订单号
      * @param targetTime 目标时间
@@ -51,6 +59,7 @@ public abstract class AbstractGeoCache {
      * 查询相近orderId
      *
      * @param dot 坐标
+     * @return
      */
     public abstract List<Integer> findOrderId(Dot dot);
 

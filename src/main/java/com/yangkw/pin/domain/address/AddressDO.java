@@ -99,4 +99,19 @@ public class AddressDO {
     public void setHotPoint(Integer hotPoint) {
         this.hotPoint = hotPoint;
     }
+
+    @Override
+    public String toString() {
+        return "AddressDO{" +
+                "id=" + id +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", type=" + type +
+                ", hotPoint=" + hotPoint +
+                '}';
+    }
 }

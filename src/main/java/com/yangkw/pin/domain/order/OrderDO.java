@@ -107,4 +107,21 @@ public class OrderDO {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDO{" +
+                "id=" + id +
+                ", creator=" + creator +
+                ", leader=" + leader +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", startAddressId=" + startAddressId +
+                ", endAddressId=" + endAddressId +
+                ", targetTime=" + targetTime +
+                ", targetNum=" + targetNum +
+                ", currentNum=" + currentNum +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

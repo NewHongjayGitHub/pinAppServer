@@ -16,20 +16,20 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableAsync
 public class AsyncConfig {
 
-    private static final int corePoolSize = 3;
-    private static final int maxPoolSize = 8;
-    private static final int keepAliveTime = 10;
-    private static final int queueCapacity = 200;
-    private static final String threadNamePrefix = "Async-Service-";
+    private static final int CORE_POOL_SIZE = 3;
+    private static final int MAX_POOL_SIZE = 8;
+    private static final int KEEP_ALIVE_TIME = 10;
+    private static final int QUEUE_CAPACITY = 200;
+    private static final String THREAD_NAME_PREFIX = "Async-Service-";
 
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(corePoolSize);
-        executor.setMaxPoolSize(maxPoolSize);
-        executor.setQueueCapacity(queueCapacity);
-        executor.setKeepAliveSeconds(keepAliveTime);
-        executor.setThreadNamePrefix(threadNamePrefix);
+        executor.setCorePoolSize(CORE_POOL_SIZE);
+        executor.setMaxPoolSize(MAX_POOL_SIZE);
+        executor.setQueueCapacity(QUEUE_CAPACITY);
+        executor.setKeepAliveSeconds(KEEP_ALIVE_TIME);
+        executor.setThreadNamePrefix(THREAD_NAME_PREFIX);
         // 线程池对拒绝任务的处理策略
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 初始化

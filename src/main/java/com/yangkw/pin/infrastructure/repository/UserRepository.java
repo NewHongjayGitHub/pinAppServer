@@ -28,8 +28,20 @@ public interface UserRepository {
      */
     UserDO find(@Param("openId") String openId);
 
+    /**
+     * 查找用户openId
+     *
+     * @param userId
+     * @return
+     */
     String findOpenId(@Param("userId") Integer userId);
 
+    /**
+     * 查找用户信息
+     *
+     * @param userId
+     * @return
+     */
     UserInfoForChat findChatInfo(@Param("userId") Integer userId);
 
     /**

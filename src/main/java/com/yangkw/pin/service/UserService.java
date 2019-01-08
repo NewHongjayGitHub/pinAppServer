@@ -32,6 +32,7 @@ public class UserService {
     public UserInfoForChat findChatInfo(Integer userId) {
         return userRepository.findChatInfo(userId);
     }
+
     public void update(LoginRequest infoDTO, String openid) {
         int row = userRepository.update(assemble(infoDTO, openid));
         Preconditions.checkState(row == 1, "login update error openid" + openid);

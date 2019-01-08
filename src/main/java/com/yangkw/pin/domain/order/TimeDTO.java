@@ -59,4 +59,15 @@ public class TimeDTO {
     public void setMinute(Integer minute) {
         this.minute = minute;
     }
+
+    @Override
+    public String toString() {
+        return "TimeDTO{" +
+                "year=" + year +
+                ", month=" + month +
+                ", day=" + day +
+                ", hour=" + hour +
+                ", minute=" + minute +
+                '}';
+    }
 }

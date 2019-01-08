@@ -9,6 +9,7 @@ public class GeoAddress {
     private String name;
     private String address;
     private Dot dot;
+
     public String getName() {
         return name;
     }

@@ -28,4 +28,12 @@ public class OrderCacheDO implements Serializable {
     public void setTargetTime(LocalDateTime targetTime) {
         this.targetTime = targetTime;
     }
+
+    @Override
+    public String toString() {
+        return "OrderCacheDO{" +
+                "orderId=" + orderId +
+                ", targetTime=" + targetTime +
+                '}';
+    }
 }

@@ -71,4 +71,17 @@ public class UserOrderRelDO {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+    @Override
+    public String toString() {
+        return "UserOrderRelDO{" +
+                "id=" + id +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", orderId=" + orderId +
+                ", userId=" + userId +
+                ", leader=" + leader +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

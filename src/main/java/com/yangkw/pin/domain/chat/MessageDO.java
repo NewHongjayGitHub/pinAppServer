@@ -51,4 +51,15 @@ public class MessageDO {
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
+
+    @Override
+    public String toString() {
+        return "MessageDO{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", time='" + time + '\'' +
+                ", message='" + message + '\'' +
+                ", orderId=" + orderId +
+                '}';
+    }
 }
