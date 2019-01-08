@@ -2,6 +2,7 @@
 微信拼车小程序服务端，聚合相近起点终点的乘客，均摊成本。
 
 ###使用技术
+
 springBoot+Redis+MySQL+Mybatis+Nginx+WebSocket
 
 
