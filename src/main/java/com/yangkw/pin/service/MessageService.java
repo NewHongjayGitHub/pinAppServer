@@ -40,7 +40,7 @@ public class MessageService {
     }
 
     private MessageBody assemble(MessageDO messageDO, Integer userId) {
-        UserInfoForChat userDO = userRepository.findChatInfo(userId);
+        UserInfoForChat userDO = userRepository.findChatInfo(messageDO.getUserId());
         MessageBody messageBody = new MessageBody(messageDO.getTime(), userDO, messageDO.getMessage());
         messageBody.setOwnMsg(messageDO.getUserId().equals(userId));
         return messageBody;

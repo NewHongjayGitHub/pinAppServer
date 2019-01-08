@@ -51,7 +51,7 @@ public class OrderController {
     @ParamCheck
     public OwnOrderResponse own(@RequestBody @Validated OwnOrderRequest request, BindingResult bindingResult) {
         OwnOrderResponse response = new OwnOrderResponse();
-        List<Order> orderList = orderService.findOwnOrderList(request.getToken(), request.getPage());
+        List<Order> orderList = orderService.findOwnOrderList(request.getToken());
         response.setOrderList(orderList);
         response.setSuccess(true);
         return response;

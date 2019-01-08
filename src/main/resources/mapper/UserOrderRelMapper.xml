@@ -9,23 +9,23 @@
     values (now(),now(),#{userOrderRelDO.orderId},#{userOrderRelDO.userId},#{userOrderRelDO.leader},
     0)
     </insert>
-    <update id="logicDelete">
-        UPDATE user_order_rel SET deleted=1 where order_id = #{orderId} AND user_id = #{userId}
-    </update>
+    <delete id="logicDelete">
+        delete from user_order_rel where order_id = #{orderId} AND user_id = #{userId}
+    </delete>
     <update id="updateLeader">
         UPDATE user_order_rel SET leader = 1 WHERE user_id = #{userId} AND order_id = #{orderId} and deleted = 0
     </update>
 
     <select id="queryPartner" resultType="java.lang.Integer">
-        SELECT open_id FROM user_order_rel WHERE order_id=#{orderId} and deleted = 0
+        SELECT user_id FROM user_order_rel WHERE order_id=#{orderId} and deleted = 0
     </select>
     <select id="queryOwnOrderList" resultType="java.lang.Integer">
-        SELECT order_id FROM user_order_rel WHERE user_id = #{userId} and deleted = 0  limit #{page},4
+        SELECT order_id FROM user_order_rel WHERE user_id = #{userId} and deleted = 0
     </select>
     <select id="exit" resultType="java.lang.Integer">
         SELECT id FROM  user_order_rel WHERE user_id = #{userId} AND order_id = #{orderId} and deleted = 0  limit 1
     </select>
     <select id="isLeader" resultType="java.lang.Integer">
-        SELECT id FROM user_order_rel WHERE user_id =#{userId} AND orderId=#{orderId} AND leader = 1 and deleted = 0 limit 1
+        SELECT id FROM user_order_rel WHERE user_id =#{userId} AND order_id=#{orderId} AND leader = 1 and deleted = 0 limit 1
     </select>
 </mapper>

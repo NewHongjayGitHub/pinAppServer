@@ -2,7 +2,7 @@ package com.yangkw.pin.infrastructure.cache;
 
 import com.alibaba.fastjson.JSON;
 import com.yangkw.pin.domain.address.Dot;
-import com.yangkw.pin.domain.order.OrderCache;
+import com.yangkw.pin.domain.order.OrderCacheDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Distance;
@@ -41,10 +41,10 @@ public abstract class AbstractGeoCache {
     protected void add(String key, Dot dot, Integer orderId, LocalDateTime targetTime) {
         GeoOperations<String, String> operations = redisTemplate.opsForGeo();
         Point point = new Point(dot.getLongitude(), dot.getLatitude());
-        OrderCache orderCache = new OrderCache();
-        orderCache.setOrderId(orderId);
-        orderCache.setTargetTime(targetTime);
-        operations.add(key, point, JSON.toJSONString(orderCache));
+        OrderCacheDO orderCacheDO = new OrderCacheDO();
+        orderCacheDO.setOrderId(orderId);
+        orderCacheDO.setTargetTime(targetTime);
+        operations.add(key, point, JSON.toJSONString(orderCacheDO));
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class AbstractGeoCache {
             return Collections.emptyList();
         }
         for (GeoResult<RedisGeoCommands.GeoLocation<String>> x : geoResults.getContent()) {
-            OrderCache cache = JSON.parseObject(x.getContent().getName(), OrderCache.class);
+            OrderCacheDO cache = JSON.parseObject(x.getContent().getName(), OrderCacheDO.class);
             if (cache.getTargetTime() != null && cache.getTargetTime().isBefore(LocalDateTime.now())) {
                 operations.remove(key, x.getContent().getName());
             } else {

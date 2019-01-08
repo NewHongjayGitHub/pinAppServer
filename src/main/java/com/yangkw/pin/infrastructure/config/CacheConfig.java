@@ -38,6 +38,7 @@ public class CacheConfig {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(3);
         final int weekTime = 1 * 60 * 60;
         redisCacheConfigurationMap.put("tokenMap", this.getRedisCacheConfigurationWithTtl(weekTime));
+        redisCacheConfigurationMap.put("templateMap", this.getRedisCacheConfigurationWithTtl(weekTime));
         return redisCacheConfigurationMap;
     }
 

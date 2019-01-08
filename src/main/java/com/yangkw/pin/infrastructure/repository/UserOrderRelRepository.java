@@ -20,7 +20,7 @@ public interface UserOrderRelRepository {
 
     Integer exit(@Param("orderId") Integer orderId, @Param("userId") Integer userId);
 
-    List<Integer> queryOwnOrderList(@Param("userId") Integer userId, @Param("page") Integer page);
+    List<Integer> queryOwnOrderList(@Param("userId") Integer userId);
 
     Integer logicDelete(@Param("orderId") Integer orderId, @Param("userId") Integer userId);
 

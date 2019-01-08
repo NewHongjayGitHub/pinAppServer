@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  *
  * @author kaiwen.ykw 2018-12-27
  */
-public class OrderCache implements Serializable {
+public class OrderCacheDO implements Serializable {
     private static final long serialVersionUID = 6823945518498051272L;
     private Integer orderId;
     private LocalDateTime targetTime;

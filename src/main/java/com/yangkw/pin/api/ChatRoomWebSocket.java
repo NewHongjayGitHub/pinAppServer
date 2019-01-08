@@ -83,6 +83,7 @@ public class ChatRoomWebSocket {
                 sessionSet.putIfAbsent(orderId, sessions);
             }
             infoMap.put(session, info);
+            LOG.info("onOpen info:{}", info);
             if (messageService.isExist(orderId)) {
                 List<MessageBody> messageBodyList = messageService.queryAll(orderId, userId);
                 String a = JSONArray.toJSONString(messageBodyList, SerializerFeature.DisableCircularReferenceDetect);

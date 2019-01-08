@@ -13,6 +13,7 @@ import com.yangkw.pin.domain.relation.UserOrderRelDO;
 import com.yangkw.pin.domain.request.FuzzyOrderRequest;
 import com.yangkw.pin.domain.request.PartnerOrderRequest;
 import com.yangkw.pin.domain.request.PublishOrderRequest;
+import com.yangkw.pin.infrastructure.cache.TemplateCache;
 import com.yangkw.pin.infrastructure.repository.OrderRepository;
 import com.yangkw.pin.infrastructure.repository.UserOrderRelRepository;
 import com.yangkw.pin.infrastructure.repository.UserRepository;
@@ -57,6 +58,8 @@ public class OrderService {
     private WxMaService wxMaService;
     @Value("${templateId}")
     private String templateId;
+    @Autowired
+    private TemplateCache templateCache;
 
     public List<Order> findOrderList(FuzzyOrderRequest request) {
         List<Integer> orderids = cacheService.findNearOrderId(request);
@@ -71,38 +74,32 @@ public class OrderService {
         return orderDOList.stream().map(this::assemble).collect(Collectors.toList());
     }
 
-    public List<Order> findOwnOrderList(String token, Integer page) {
+    public List<Order> findOwnOrderList(String token) {
         Integer userId = cacheService.getUserId(token);
 
-        List<OrderDO> orderDOList;
-        int error;
-        do {
-            error = 0;
-            List<Integer> orderIdList = userOrderRelRepository.queryOwnOrderList(userId, solvePage(page));
-            if (orderIdList.isEmpty()) {
-                return Collections.emptyList();
+        List<Integer> orderIdList = userOrderRelRepository.queryOwnOrderList(userId);
+        if (orderIdList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<OrderDO> orderDOList = orderRepository.findAll(orderIdList);
+        for (OrderDO o : orderDOList) {
+            if (o.getTargetTime().isBefore(LocalDateTime.now())) {
+                transactionTemplate.execute(status -> {
+                            userOrderRelRepository.logicDelete(o.getId(), userId);
+                            orderRepository.logicDelete(o.getId());
+                            return true;
+                        }
+                );
             }
-            orderDOList = orderRepository.findAll(orderIdList);
-            for (OrderDO o : orderDOList) {
-                if (o.getTargetTime().isBefore(LocalDateTime.now())) {
-                    transactionTemplate.execute(status -> {
-                                userOrderRelRepository.logicDelete(o.getId(), userId);
-                                orderRepository.logicDelete(o.getId());
-                                return true;
-                            }
-                    );
-                    error++;
-                }
-            }
-        } while (error != 0);
+        }
         return orderDOList.stream().map(o -> assembleLeader(o, userId)).collect(Collectors.toList());
     }
 
-    private Integer solvePage(Integer p) { //0 5 10
+    private Integer solvePage(Integer p, Integer dynamic) { //0 5 10
         if (p <= 0) {
             return 0;
         } else {
-            return 4 * p;
+            return dynamic * p;
         }
 
     }
@@ -136,7 +133,7 @@ public class OrderService {
         Integer orderId = request.getOrderId();
         Integer userId = cacheService.getUserId(request.getToken());
         Integer exitRow = userOrderRelRepository.exit(orderId, userId);
-        if (exitRow == null) {
+        if (exitRow != null) {
             return false;
         }
         transactionTemplate.execute(status -> {
@@ -233,7 +230,15 @@ public class OrderService {
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         String warn = "请尽快与拼车友联系哦";
         String[] params = new String[]{title, name, time, warn};
-        templateNotify(userRepository.findOpenId(orderDO.getLeader()), formId, params);
+        List<Integer> userIds = userOrderRelRepository.queryPartner(orderId);
+        if (userIds.isEmpty()) {
+            return;
+        }
+        userIds.parallelStream().filter(x -> !x.equals(userId)).map(x -> {
+                    templateNotify(userRepository.findOpenId(x), templateCache.getTemplateId(x), params);
+                    return true;
+                }
+        );
     }
 
     private void templateNotify(String receiver, String formId, String[] params) {
